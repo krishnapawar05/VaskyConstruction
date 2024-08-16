@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Read More / Read Less Example</title>
+<style>
+  .description {
+    overflow: hidden;
+    height: 100px; /* adjust as needed */
+  }
+</style>
+</head>
+<body>
+
+<h2>Topic 1</h2>
+<div class="description">
+  <p>Long description for Topic 1. This can be a lengthy text explaining the topic.</p>
+</div>
+<button class="read-more" onclick="toggleReadMore(this)">Read More</button>
+
+<h2>Topic 2</h2>
+<div class="description">
+  <p>Long description for Topic 2. This can be a lengthy text explaining the topic.</p>
+</div>
+<button class="read-more" onclick="toggleReadMore(this)">Read More</button>
+
+<!-- Repeat the structure for other topics -->
+
+<script>
+function toggleReadMore(button) {
+  var description = button.previousElementSibling;
+  if (description.classList.contains('description')) {
+    if (description.style.height === '100px') {
+      description.style.height = 'auto';
+      button.textContent = 'Read Less';
+    } else {
+      description.style.height = '100px';
+      button.textContent = 'Read More';
+    }
+  }
+}
+</script>
+
+</body>
+</html>

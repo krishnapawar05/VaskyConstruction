@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>House Construction Cost Calculator</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            background-image: url(cal.jpg);
+            height: 15px;
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-repeat: no-repeat;
+        }
+
+
+        h1 {
+            text-align: center;
+        }
+
+        form {
+            text-align: center;
+        }
+
+        input[type="number"] {
+            width: 100px;
+            padding: 8px;
+            margin: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        input[type="submit"] {
+            padding: 10px 20px;
+            border: none;
+            background-color: #007bff;
+            color: #fff;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+        }
+
+        table,th,td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        .container12 {
+            width: 55%;
+            height: auto;
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            justify-content: space-evenly;
+            margin: 0 auto;
+            text-align: center;
+            position: absolute;
+            top: 230px;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        form {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-evenly;
+        }
+
+        label,
+        select,
+        input,
+        .radio-container {
+            width: 45%;
+            margin-bottom: 10px;
+        }
+
+        input[type="number"] {
+            padding: 5px;
+        }
+
+        button {
+            width: 100%;
+            background-color: #0c7092;
+            color: white;
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            opacity: 0.8;
+        }
+
+        .radio-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .radio-container input[type="radio"] {
+            margin-right: 5px;
+        }
+
+        #area {
+            width: 80px;
+            margin-left: 10px;
+        }
+
+        #propertyType {
+            height: 30px;
+            width: 100px;
+        }
+
+        #t1 {
+            height: 30px;
+            width: 100px;
+            margin-right: 50px;
+        }
+
+        #materialCosts {
+            position: absolute;
+            margin-top: 100%;
+            margin-right: 50%;
+            background-color: rgba(255, 255, 255, 0.8);
+            /* padding: 10px; */
+            width: 340px;
+            text-align: center;
+        }
+
+        #myChart {
+            margin-top: 100%;
+            margin-left: 40%;
+        }
+
+        .material-costs {
+            
+            color: #159ec4;
+            background-color: #f9f9f9;
+        }
+
+        .material-costs-heading {
+            font-family: "Roboto", sans-serif;
+            color: #0a0b0b;
+            font-size: 30px;
+            margin-bottom: 10px;
+            text-align: justify;
+            font-weight: 350;
+        }
+
+        .material-name {
+            color: black;
+            display: grid;
+            font-weight: lighter;
+            text-align: justify;
+            font-size: larger;
+        }
+
+        .material-price {
+            color: #0C359E;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .span {
+            color: #3081D0;
+            font-weight: 500;
+        }
+
+        #result {
+            position: absolute;
+            margin-top: 165%;
+            margin-right: 60px;
+            /* background-color: rgba(255, 255, 255, 0.8);
+            padding: 10px;
+            width: 340px;
+             */
+
+        }
+
+        table {
+            width: 100%;
+            /* margin-top: 165%; */
+            border-collapse: collapse;
+            width: 800px;
+
+
+        }
+
+        table,
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+            text-align: center;
+            margin-left: 75px;
+            background-color: rgb(199, 196, 196);
+        }
+
+        th {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        h2 {
+            margin-top: 1;
+            text-align: center;
+            margin-left: 70px;
+        }
+
+
+
+
+
+
+    </style>
+</head>
+
+<body>
+
+    
+    <div class="container12">
+        <h1>House Construction Cost Calculator</h1>
+        <form onsubmit="calculateCost(); return false;" id="calculatorForm">
+            <div>
+                <label for="propertyType">Property Type*</label>
+                <select id="propertyType">
+                    <option value="residential">Residential</option>
+                    <option value="commercial">Commercial</option>
+                    <option value="industrial">Industrial</option>
+                </select>
+                <div class="radio-container">
+                    <label>Area</label>
+                    <input type="radio" id="sqMeter" name="areaUnit" value="sqMeter">
+                    <label for="sqMeter" style="font-size: 10px; font-weight: 500;">Sq.Meter</label>
+                    <input type="radio" id="sqFeet" name="areaUnit" value="sqFeet" checked>
+                    <label for="sqFeet" style="font-size: 10px; font-weight: 500;">Sq.Feet</label>
+                    <input type="number" id="area" value="">
+                </div>
+            </div>
+            <div>
+                <label for="houseType">House Type*</label>
+                <select id="t1">
+                    <option value="basic">Basic</option>
+                    <option value="luxury">Luxury</option>
+                    <option value="premium">Premium</option>
+                </select>
+            </div>
+            <div>
+                <label for="city">City*</label>
+                <select id="City" style="width:120px; height:30px">
+                    <option value="">-- Select City --</option>
+                    <option value="Hubli-Dharwad">Hubli-Dharwad</option>
+                    <!-- Add more cities as needed -->
+                </select>
+            </div>
+            <div id="result1"></div>
+
+            <button type="submit">Calculate</button>
+        </form>
+        <!--  -->
+    </div>
+    <div id="result"></div>
+
+    <canvas id="myChart" style="width:100%;max-width:600px"></canvas>
+
+    <!-- Material costs display -->
+    <div id="materialCosts" class="material-costs"></div>
+
+    <div id="resultHtml"></div>
+
+    <script>
+        function calculateCost() {
+            var propertyType = document.getElementById("propertyType").value;
+            var houseType = document.getElementById("t1").value;
+            var area = parseFloat(document.getElementById("area").value);
+            var areaUnit = document.querySelector('input[name="areaUnit"]:checked').value;
+            var costPerSqFeet = 0;
+
+            if (propertyType === "residential") {
+                if (houseType === "basic") costPerSqFeet = 1800;
+                else if (houseType === "luxury") costPerSqFeet = 2000;
+                else if (houseType === "premium") costPerSqFeet = 2200;
+            } else if (propertyType === "commercial") {
+                if (houseType === "basic") costPerSqFeet = 2520;
+                else if (houseType === "luxury") costPerSqFeet = 2800;
+                else if (houseType === "premium") costPerSqFeet = 3080;
+            } else if (propertyType === "industrial") {
+                if (houseType === "basic") costPerSqFeet = 3060;
+                else if (houseType === "luxury") costPerSqFeet = 3400;
+                else if (houseType === "premium") costPerSqFeet = 3740;
+            }
+
+            if (areaUnit === "sqMeter") {
+                // Convert area to square feet
+                area *= 10.7639; // 1 square meter = 10.7639 square feet
+            }
+
+            var totalCost = area * costPerSqFeet;
+            var materialCosts = {
+                "Profit GST & other taxes  ": totalCost * 0.1,
+                "Water charges ": totalCost * 0.01,
+                "Tools and Equipments ": totalCost * 0.05,
+                "Labour Cahrges ": totalCost * 0.17,
+                "Material Charge ": totalCost * 0.67,
+            };
+
+            // Display material costs
+            var materialCostsDisplay = "<h3 class='material-costs-heading'>Total <span class='span'>Estimation </span>:</h3>";
+            for (var material in materialCosts) {
+                materialCostsDisplay += "<p class='material-name'>" + material + ": <span class='material-price'>₹" + materialCosts[material].toFixed(2) + "</span></p>";
+            }
+
+            document.getElementById("materialCosts").innerHTML = materialCostsDisplay;
+
+            // Display total cost including material costs
+            document.getElementById("result1").innerHTML = "<p2>Total Cost: ₹" + totalCost.toFixed(2) + "</p2>";
+
+            // Create chart
+            const xValues = Object.keys(materialCosts);
+            const yValues = Object.values(materialCosts);
+            const barColors = [
+                "#80BCBD",
+                "#c741dd",
+                "#EF4040",
+                "#FBA834",
+                "#1c6ed9",
+            ];
+
+            new Chart("myChart", {
+                type: "pie",
+                data: {
+                    labels: xValues,
+                    datasets: [{
+                        backgroundColor: barColors,
+                        data: yValues
+                    }]
+                },
+                options: {
+                    title: {
+                        display: true,
+                        text: "Material Costs"
+                    },
+                    tooltips: {
+                        callbacks: {
+                            label: function (tooltipItem, data) {
+                                var dataset = data.datasets[tooltipItem.datasetIndex];
+                                var total = dataset.data.reduce(function (previousValue, currentValue, currentIndex, array) {
+                                    return previousValue + currentValue;
+                                });
+                                var currentValue = dataset.data[tooltipItem.index];
+                                var percentage = Math.floor(((currentValue / total) * 100) + 0.5);
+                                return xValues[tooltipItem.index] + ': ₹' + currentValue.toFixed(2) + ' (' + percentage + '%)';
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Event listener for form submission
+        document.getElementById('calculatorForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            var area = parseFloat(document.getElementById('area').value);
+            var unit = document.querySelector('input[name="areaUnit"]:checked').value;
+            var propertyType = document.getElementById('propertyType').value;
+            var houseType = document.getElementById('t1').value;
+
+            if (unit === 'sqFeet') {
+                // Convert area from square meters to square feet
+                area *= 0.092903; // 1 square meter = 10.7639 square feet
+            }
+
+            var basicMultiplier = 1;
+            if (propertyType === 'commercial') {
+                basicMultiplier = 1.4;
+            } else if (propertyType === 'industrial') {
+                basicMultiplier = 1.7;
+            }
+
+            var basicQuantity = {
+                bricks: 352 * area * basicMultiplier,
+                cement: 4.6 * area * basicMultiplier,
+                aggregate: 1.192 * area * basicMultiplier,
+                steel: 0.0165 * area * basicMultiplier,
+                sand: 1.153 * area * basicMultiplier
+            };
+
+            var luxuryQuantity = {
+                bricks: basicQuantity.bricks * 1.2,
+                cement: basicQuantity.cement * 1.2,
+                aggregate: basicQuantity.aggregate * 1.2,
+                steel: basicQuantity.steel * 1.2,
+                sand: basicQuantity.sand * 1.2
+            };
+
+            var premiumQuantity = {
+                bricks: basicQuantity.bricks * 1.4,
+                cement: basicQuantity.cement * 1.4,
+                aggregate: basicQuantity.aggregate * 1.4,
+                steel: basicQuantity.steel * 1.4,
+                sand: basicQuantity.sand * 1.4
+            };
+
+            var basicPrice = {
+                bricks: basicQuantity.bricks * 8,
+                cement: basicQuantity.cement * 360,
+                aggregate: basicQuantity.aggregate * 880,
+                steel: basicQuantity.steel * 90000,
+                sand: basicQuantity.sand * 990
+            };
+
+            var luxuryPrice = {
+                bricks: luxuryQuantity.bricks * 10,
+                cement: luxuryQuantity.cement * 400,
+                aggregate: luxuryQuantity.aggregate * 1600,
+                steel: luxuryQuantity.steel * 120000,
+                sand: luxuryQuantity.sand * 1300
+            };
+
+            var premiumPrice = {
+                bricks: premiumQuantity.bricks * 12,
+                cement: premiumQuantity.cement * 420,
+                aggregate: premiumQuantity.aggregate * 2000,
+                steel: premiumQuantity.steel * 160000,
+                sand: premiumQuantity.sand * 2000
+            };
+
+            var resultHtml = '<h2>Material Quantity and Cost for ' + houseType.charAt(0).toUpperCase() + houseType.slice(1) + ' House</h2>';
+            resultHtml += '<table>';
+            resultHtml += '<tr><th>Material</th><th>Quantity (units)</th><th>Cost (INR)</th></tr>';
+            if (houseType === 'basic') {
+                resultHtml += '<tr><td>Bricks</td><td>' + basicQuantity.bricks.toFixed(2) + '</td><td>' + basicPrice.bricks.toFixed(2) + '</td></tr>';
+                resultHtml += '<tr><td>Cement</td><td>' + basicQuantity.cement.toFixed(2) + '</td><td>' + basicPrice.cement.toFixed(2) + '</td></tr>';
+                resultHtml += '<tr><td>Aggregate</td><td>' + basicQuantity.aggregate.toFixed(2) + '</td><td>' + basicPrice.aggregate.toFixed(2) + '</td></tr>';
+                resultHtml += '<tr><td>Steel</td><td>' + basicQuantity.steel.toFixed(2) + '</td><td>' + basicPrice.steel.toFixed(2) + '</td></tr>';
+                resultHtml += '<tr><td>Sand</td><td>' + basicQuantity.sand.toFixed(2) + '</td><td>' + basicPrice.sand.toFixed(2) + '</td></tr>';
+            } else if (houseType === 'luxury') {
+                resultHtml += '<tr><td>Bricks</td><td>' + luxuryQuantity.bricks.toFixed(2) + '</td><td>' + luxuryPrice.bricks.toFixed(2) + '</td></tr>';
+                resultHtml += '<tr><td>Cement</td><td>' +
+                    luxuryQuantity.cement.toFixed(2) + '</td><td>' + luxuryPrice.cement.toFixed(2) + '</td></tr>';
+                resultHtml += '<tr><td>Aggregate</td><td>' + luxuryQuantity.aggregate.toFixed(2) + '</td><td>' + luxuryPrice.aggregate.toFixed(2) + '</td></tr>';
+                resultHtml += '<tr><td>Steel</td><td>' + luxuryQuantity.steel.toFixed(2) + '</td><td>' + luxuryPrice.steel.toFixed(2) + '</td></tr>';
+                resultHtml += '<tr><td>Sand</td><td>' + luxuryQuantity.sand.toFixed(2) + '</td><td>' + luxuryPrice.sand.toFixed(2) + '</td></tr>';
+            } else if (houseType === 'premium') {
+                resultHtml += '<tr><td>Bricks</td><td>' + premiumQuantity.bricks.toFixed(2) + '</td><td>' + premiumPrice.bricks.toFixed(2) + '</td></tr>';
+                resultHtml += '<tr><td>Cement</td><td>' + premiumQuantity.cement.toFixed(2) + '</td><td>' + premiumPrice.cement.toFixed(2) + '</td></tr>';
+                resultHtml += '<tr><td>Aggregate</td><td>' + premiumQuantity.aggregate.toFixed(2) + '</td><td>' + premiumPrice.aggregate.toFixed(2) + '</td></tr>';
+                resultHtml += '<tr><td>Steel</td><td>' + premiumQuantity.steel.toFixed(2) + '</td><td>' + premiumPrice.steel.toFixed(2) + '</td></tr>';
+                resultHtml += '<tr><td>Sand</td><td>' + premiumQuantity.sand.toFixed(2) + '</td><td>' + premiumPrice.sand.toFixed(2) + '</td></tr>';
+            }
+            resultHtml += '</table>';
+
+            document.getElementById('result').innerHTML = resultHtml;
+        });
+    </script>
+
+</body>
+
+</html>
