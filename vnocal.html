@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>House Construction Cost Calculator</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+
+    <style>
+
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Open Sans", sans-serif;
+}
+
+/* nav bar */
+.main1 {
+    background-color: white;
+    height: 100px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.navbar {
+    margin-left: 375px;
+    font-size: 20px;
+    position: relative;
+}
+
+.ulnav {
+    display: flex;
+    color: blue;
+    overflow: hidden;
+    margin-left: 30px;
+}
+
+.linav {
+    padding: 20px;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    position: relative;
+}
+
+.linav1 {
+    padding: 8px;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    border-radius: 10px;
+    margin-left: 150px;
+    height: 34px;
+    font-size: 20px;
+    margin-top: 10px;
+    align-items: center;
+    width: 76px;
+}
+
+#d10 {
+    font-weight: 700;
+    align-content: center;
+}
+
+a {
+    text-decoration: none;
+}
+
+
+
+        @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image: url('images/cal.jpg');
+            /* height: 15px; */
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-repeat: no-repeat;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        form {
+            text-align: center;
+        }
+
+        input[type="number"] {
+            width: 100px;
+            padding: 8px;
+            margin: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        input[type="submit"] {
+            padding: 10px 20px;
+            border: none;
+            background-color: #007bff;
+            color: #fff;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+        }
+
+        table,
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        .container12 {
+
+            width: 60%;
+            height: 250px;
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            justify-content: space-evenly;
+            margin: 0 auto;
+            text-align: center;
+            position: absolute;
+            bottom: 150px;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        form {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-evenly;
+        }
+
+        label,
+        select,
+        input,
+        .radio-container {
+            width: 45%;
+            margin-bottom: 10px;
+        }
+
+        input[type="number"] {
+            padding: 5px;
+        }
+
+        button {
+            width: 100%;
+            background-color: #0c7092;
+            color: white;
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            opacity: 0.8;
+        }
+
+        .radio-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .radio-container input[type="radio"] {
+            margin-right: 5px;
+        }
+
+        #area {
+            width: 80px;
+            margin-left: 10px;
+        }
+
+        #propertyType {
+            height: 30px;
+            width: 100px;
+        }
+
+        #t1 {
+            height: 30px;
+            width: 100px;
+            margin-right: 50px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="main1">
+        <div class="logo">
+            <img src="images/logo.png" width="100px" height="80px" alt="logo">
+        </div>
+        <div class="navbar">
+            <ul type="none" class="ulnav">
+                <li class="linav"><a href="vaskyconstruction.html" style="color: #00627A;"><b>Home</b></a></li>
+                <li class="linav"><a href="vproject.html" style="color: #00627A;"><b>Projects</b></a></li>
+                <li class="linav"><a href="vexperts.html" style="color: #00627A;"><b>Experts</b></a></li>
+                <li class="linav"><a href="vservice.html" style="color: #00627A;"><b>Service</b></a></li>
+                <li class="linav"><a href="vnocal.html" style="color: #00627A;"><b>Cal Budget</b></a></li>
+                <li class="linav"><a href="vaboutus.html" style="color: #00627A;"><b>About Us</b></a></li>
+                <li class="linav1"><a href="signup.html" style="text-decoration: none; color: #00627A;"><p id="d10">Signup</p></li>
+            </ul>
+        </div>
+    </div>
+    <div class="container12">
+        <h1 style="color: black;">House Construction Cost Calculator</h1>
+        <form onsubmit="calculateCost(); return false;" id="calculatorForm">
+            <div>
+                <a href="#"></a><label for="propertyType">Property Type*</label>
+                <select id="propertyType">
+                    <option value="residential">Residential</option>
+                    <option value="commercial">Commercial</option>
+                    <option value="industrial">Industrial</option>
+                </select>
+                <div class="radio-container">
+                    <label>Area</label>
+                    <input type="radio" id="sqMeter" name="areaUnit" value="sqMeter">
+                    <label for="sqMeter">Sq.Meter</label>
+                    <input type="radio" id="sqFeet" name="areaUnit" value="sqFeet" checked>
+                    <label for="sqFeet">Sq.Feet</label>
+                    <input type="number" id="area" value="">
+                </div>
+            </div>
+            <div>
+                <label for="houseType">House Type*</label>
+                <select id="t1">
+                    <option value="basic">Basic</option>
+                    <option value="luxury">Luxury</option>
+                    <option value="premium">Premium</option>
+                </select>
+            </div>
+            <div>
+                <label for="city">City*</label>
+                <select id="City" style="width:120px; height:30px">
+                    <option value="">-- Select City --</option>
+                    <option value="Hubli-Dharwad">Hubli-Dharwad</option>
+                    <!-- Add more cities as needed -->
+                </select>
+            </div>
+            <div id="result1"></div>
+
+            <button onclick="show()">Calculate</button>
+        </form>
+        <script>
+            function show() {
+            alert("To proceed the estimation please signup/login");
+        }
+        </script>
+</body>
+
+</html>
