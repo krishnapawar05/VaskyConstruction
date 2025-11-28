@@ -1,0 +1,2 @@
+Software[[:space:]][[:space:]]Requirement[[:space:]]files/*.exe filter=lfs diff=lfs merge=lfs -text
+Software[[:space:]][[:space:]]Requirement[[:space:]]files/*.jar filter=lfs diff=lfs merge=lfs -text
